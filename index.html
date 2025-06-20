@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vai de Doce - Cartão de Visita</title>
+  <style>
+    .fundo-fixo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+        url('fundo.JPG') no-repeat center center;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 30px 15px;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    img.logo {
+      max-width: 240px;
+      filter: drop-shadow(0px 0px 8px #523724);
+    }
+
+    h1, h3 {
+      color: #523724;
+    }
+
+    h1 {
+      font-size: 1.8em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    .btn {
+      display: block;
+      margin: 15px auto;
+      padding: 16px 28px;
+      border: 2px solid #523724;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #fff5eb;
+      color: #523724;
+      text-decoration: none;
+      width: 85%;
+      max-width: 340px;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #fff5eb;
+      color: #000;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 15px rgba(25, 39, 23, 0.6);
+    }
+
+    .qr-container {
+      margin-top: 1px;
+    }
+
+    #pixNumero {
+      display: none;
+    }
+
+    #msgPix {
+      font-size: 1rem;
+	  font-weight: bold;
+      color: #523724;
+    }
+
+    .galeria {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .galeria img {
+      width: 90%;
+      max-width: 360px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(25, 39, 23, 0.3);
+    }
+
+    .galeria img:hover {
+      transform: scale(1.03);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.95);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+    }
+
+    .modal:target {
+      display: flex;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 32px;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fundo-fixo"></div>
+
+  <img src="logo.png" alt="Logo Vai de Doce" class="logo" />
+  
+  <h3><b>VENDENDO AMOR <br>EM FORMA DE DOCES!</b></h3>
+  
+  <a href="https://www.instagram.com/vaidedoce_b?igsh=MWpxb3ZwMTRyeDFoOA==" class="btn" target="_blank">Instagram</a>
+  <a href="https://wa.me/5524999161333?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20as%20cocadas." class="btn" target="_blank">WhatsApp</a>
+  <a href="#" class="btn" onclick="copiarPix()">Copiar chave PIX</a>
+
+  <div class="qr-container">
+    <p id="msgPix"></p>
+    <span id="pixNumero">f490bf45-2cf5-4537-b15e-8e98564ef02a</span>
+  </div>
+
+  <!-- Cardápio visual -->
+  <h3><b>Cardápio</b></h3>
+  <div class="galeria">
+    <a href="#cardapio"><img src="cardapio_otimizado.jpg" alt="Cardápio Vai de Doce" /></a>
+  </div>
+
+  <!-- Modal -->
+  <div id="cardapio" class="modal">
+    <a href="#" class="close">&times;</a>
+    <img src="cardapio_otimizado.jpg" alt="Cardápio Completo" />
+  </div>
+
+  <script>
+    function copiarPix() {
+      const numeroPix = document.getElementById("pixNumero").innerText;
+      navigator.clipboard.writeText(numeroPix).then(() => {
+        document.getElementById("msgPix").innerHTML = "Chave Pix copiada com sucesso!<br>Nome: Huila Machado de Lima Ribeiro<br>Banco: MercadoPago";
+      }).catch(err => {
+        document.getElementById("msgPix").innerHTML = "Erro ao copiar Pix";
+      });
+    }
+  </script>
+
+</body>
+</html>
