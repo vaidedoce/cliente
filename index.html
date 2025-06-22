@@ -32,7 +32,7 @@
       align-items: center;
       gap: 15px;
       padding: 20px;
-      margin: 20px 0; /* Adicionado espaçamento entre as seções de botões */
+      margin: 20px 0;
     }
 
     .botoes a, .botoes button,
@@ -62,8 +62,8 @@
     main {
       padding-top: 1px;
       padding-bottom: 30px;
-	  padding-left: 20px;
-	  padding-right: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
       max-width: 1000px;
       margin: 40px auto;
       background-color: #ffffffcc;
@@ -245,10 +245,14 @@
           <option value="">Selecione a Cidade</option>
           <option value="Arrozal">Arrozal</option>
           <option value="Pinheiral">Pinheiral</option>
-		  <option value="Pinheiral">Piraí</option>
+          <option value="Piraí">Piraí</option>
           <option value="Volta Redonda">Volta Redonda</option>
         </select>
-        <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+
+        <div id="campoBairro">
+          <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+        </div>
+
         <input type="text" id="rua" name="rua" placeholder="Rua" required>
         <input type="text" id="numero" name="numero" placeholder="Número" required>
         <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
@@ -267,11 +271,6 @@
     </div>
   </div>
 
-  <datalist id="bairros-vr">
-    <option value="Vila Santa Cecília">
-    <option value="Aterrado">
-  </datalist>
-
 <script>
 const sabores = [
   { nome: "Tradicional", potinho: 6, familia: 35 },
@@ -288,13 +287,21 @@ let nomeCliente = '';
 let enderecoCliente = '';
 
 const cidadeSelect = document.getElementById('cidade');
-const bairroInput = document.getElementById('bairro');
+const campoBairro = document.getElementById('campoBairro');
 
-cidadeSelect.addEventListener('change', function() {
+cidadeSelect.addEventListener('change', function () {
   if (this.value === 'Volta Redonda') {
-    bairroInput.setAttribute('list', 'bairros-vr');
+    campoBairro.innerHTML = `
+      <select id="bairro" name="bairro" required>
+        <option value="">Selecione o Bairro</option>
+        <option value="Vila Santa Cecília">Vila Santa Cecília</option>
+        <option value="Aterrado">Aterrado</option>
+      </select>
+    `;
   } else {
-    bairroInput.removeAttribute('list');
+    campoBairro.innerHTML = `
+      <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+    `;
   }
 });
 
@@ -312,7 +319,7 @@ document.getElementById('dadosForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const nome = document.getElementById('nome').value.trim();
   const cidade = cidadeSelect.value;
-  const bairro = bairroInput.value.trim();
+  const bairro = document.getElementById('bairro').value.trim();
   const rua = document.getElementById('rua').value.trim();
   const numero = document.getElementById('numero').value.trim();
 
