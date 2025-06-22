@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-image: url('fundo.JPG');
+      background-image: url('imagens/fundo.jpg');
       background-repeat: repeat;
       background-size: auto;
       background-attachment: fixed;
@@ -32,7 +32,7 @@
       align-items: center;
       gap: 15px;
       padding: 20px;
-      margin: 20px auto;
+      margin: 20px 0; /* Adicionado espaçamento entre as seções de botões */
     }
 
     .botoes a, .botoes button,
@@ -60,25 +60,15 @@
     }
 
     main {
-      padding: 40px 20px;
+      padding-top: 1px;
+      padding-bottom: 30px;
+	  padding-left: 20px;
+	  padding-right: 20px;
       max-width: 1000px;
       margin: 40px auto;
       background-color: #ffffffcc;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    h1, h2 {
-      color: #653c2c;
-    }
-
-    p {
-      color: #444;
-      line-height: 1.6;
     }
 
     .galeria {
@@ -137,22 +127,32 @@
       cursor: pointer;
     }
 
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
     .sabores {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 20px;
       justify-content: center;
       margin-bottom: 20px;
     }
 
     .sabor {
       border: 2px solid #ffd2e3;
-      border-radius: 15px;
+      border-radius: 20px;
       padding: 15px;
-      width: 260px;
+      width: 280px;
       background-color: #fff;
-      cursor: pointer;
-      transition: 0.2s;
+      box-sizing: border-box;
+      transition: 0.3s;
     }
 
     .sabor.selected {
@@ -160,22 +160,37 @@
       background-color: #fff0f6;
     }
 
-    .sabor label {
+    .sabor strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .opcao {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      gap: 8px;
     }
 
-    input[type="text"], input[type="number"] {
-      padding: 8px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+    .opcao label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .opcao span {
+      flex: 1;
     }
 
     input[type="number"] {
       width: 60px;
+      padding: 6px;
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      text-align: center;
     }
 
     @media (max-width: 600px) {
@@ -193,29 +208,27 @@
 <body>
 
   <header>
-    <img src="logo.png" alt="Logo Vai de Doce">
+    <img src="imagens/logo.png" alt="Logo Vai de Doce">
   </header>
 
   <section class="botoes">
-    <a href="https://www.instagram.com/2h.fitness/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/vaidedoce_b" target="_blank">Instagram</a>
     <button onclick="abrirFormulario()">Faça seu Pedido</button>
   </section>
 
   <main>
-    <section>
-      <h1>Bem-vindo à Vai de Doce!</h1>
-      <p>Uma explosão de sabor em cada mordida! Aqui você encontra doces artesanais feitos com carinho e ingredientes selecionados. Explore nosso cardápio e se apaixone!</p>
-    </section>
+    <h1>Bem-vindo à Vai de Doce!</h1>
+    <p>Uma explosão de sabor em cada mordida! Aqui você encontra nossas cocadas artesanais feitas com muito amor e carinho.</p>
 
     <section class="galeria">
-      <img src="foto1.jpg" alt="Imagem da doceria ou produto 1">
-      <img src="foto2.jpg" alt="Imagem da doceria ou produto 2">
-      <img src="foto3.jpg" alt="Imagem da doceria ou produto 3">
+      <img src="imagens/foto1.jpg" alt="Produto 1">
+      <img src="imagens/foto2.jpg" alt="Produto 2">
+      <img src="imagens/foto3.jpg" alt="Produto 3">
     </section>
   </main>
 
   <section class="botoes">
-	<a href="https://wa.me/5524999999999" target="_blank">Fale Conosco</a>
+    <a href="https://wa.me/5524999161333" target="_blank">Fale Conosco</a>
   </section>
 
   <footer>
@@ -228,8 +241,17 @@
       <span class="close" onclick="fecharFormulario(event)">&times;</span>
       <h2>Preencha seus dados</h2>
       <form id="dadosForm">
-        <input type="text" id="nome" name="nome" placeholder="Nome completo" required style="width:100%; margin-bottom:10px;">
-        <input type="text" id="endereco" name="endereco" placeholder="Endereço de Entrega" required style="width:100%; margin-bottom:15px;">
+        <select id="cidade" required>
+          <option value="">Selecione a Cidade</option>
+          <option value="Arrozal">Arrozal</option>
+          <option value="Pinheiral">Pinheiral</option>
+		  <option value="Pinheiral">Piraí</option>
+          <option value="Volta Redonda">Volta Redonda</option>
+        </select>
+        <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+        <input type="text" id="rua" name="rua" placeholder="Rua" required>
+        <input type="text" id="numero" name="numero" placeholder="Número" required>
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
         <button type="submit">Acessar Cardápio</button>
       </form>
     </div>
@@ -245,122 +267,149 @@
     </div>
   </div>
 
-  <script>
-    const sabores = [
-      { nome: "Tradicional", potinho: 6, familia: 35 },
-      { nome: "Maracujá", potinho: 7, familia: 40 },
-      { nome: "Gengibre", potinho: 7, familia: 40 },
-      { nome: "Limão", potinho: 7, familia: 40 },
-      { nome: "Café", potinho: 7, familia: 40 },
-      { nome: "Abacaxi", potinho: 7, familia: 40 },
-      { nome: "Nozes", potinho: 8, familia: 56 },
-      { nome: "Macadâmia", potinho: 9, familia: 63 }
-    ];
+  <datalist id="bairros-vr">
+    <option value="Vila Santa Cecília">
+    <option value="Aterrado">
+  </datalist>
 
-    let nomeCliente = '';
-    let enderecoCliente = '';
+<script>
+const sabores = [
+  { nome: "Tradicional", potinho: 6, familia: 35 },
+  { nome: "Maracujá", potinho: 7, familia: 40 },
+  { nome: "Gengibre", potinho: 7, familia: 40 },
+  { nome: "Limão", potinho: 7, familia: 40 },
+  { nome: "Café", potinho: 7, familia: 40 },
+  { nome: "Abacaxi", potinho: 7, familia: 40 },
+  { nome: "Nozes", potinho: 8, familia: 56 },
+  { nome: "Macadâmia", potinho: 9, familia: 63 }
+];
 
-    function abrirFormulario() {
-      document.getElementById("formModal").style.display = "block";
-    }
+let nomeCliente = '';
+let enderecoCliente = '';
 
-    function fecharFormulario(event) {
-      if (event.target.id === "formModal" || event.target.className === "close") {
-        document.getElementById("formModal").style.display = "none";
-      }
-    }
+const cidadeSelect = document.getElementById('cidade');
+const bairroInput = document.getElementById('bairro');
 
-    document.getElementById('dadosForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      nomeCliente = document.getElementById('nome').value.trim();
-      enderecoCliente = document.getElementById('endereco').value.trim();
+cidadeSelect.addEventListener('change', function() {
+  if (this.value === 'Volta Redonda') {
+    bairroInput.setAttribute('list', 'bairros-vr');
+  } else {
+    bairroInput.removeAttribute('list');
+  }
+});
 
-      if (nomeCliente === "" || enderecoCliente === "") {
-        alert("Por favor, preencha todos os campos.");
-        return;
-      }
+function abrirFormulario() {
+  document.getElementById("formModal").style.display = "block";
+}
 
-      document.getElementById("formModal").style.display = "none";
-      abrirModal();
+function fecharFormulario(event) {
+  if (event.target.id === "formModal" || event.target.className === "close") {
+    document.getElementById("formModal").style.display = "none";
+  }
+}
+
+document.getElementById('dadosForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const cidade = cidadeSelect.value;
+  const bairro = bairroInput.value.trim();
+  const rua = document.getElementById('rua').value.trim();
+  const numero = document.getElementById('numero').value.trim();
+
+  if (!nome || !cidade || !bairro || !rua || !numero) {
+    alert("Por favor, preencha todos os campos.");
+    return;
+  }
+
+  nomeCliente = nome;
+  enderecoCliente = `${rua}, ${numero} - ${bairro} - ${cidade}`;
+
+  document.getElementById("formModal").style.display = "none";
+  abrirModal();
+});
+
+function abrirModal() {
+  document.getElementById("modal").style.display = "block";
+  gerarSabores();
+}
+
+function fecharModal(event) {
+  if (event.target.id === "modal" || event.target.className === "close") {
+    document.getElementById("modal").style.display = "none";
+  }
+}
+
+function gerarSabores() {
+  const container = document.getElementById("sabores");
+  container.innerHTML = "";
+
+  sabores.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "sabor";
+    div.innerHTML = `
+      <strong>${item.nome}</strong>
+      <div class="opcao">
+        <label>
+          <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
+          <span>Potinho - R$${item.potinho},00</span>
+        </label>
+        <input type="number" class="quantidade" min="1" value="1" disabled>
+      </div>
+      <div class="opcao">
+        <label>
+          <input type="checkbox" data-nome="${item.nome}" data-tipo="Pote Família" data-preco="${item.familia}">
+          <span>Família - R$${item.familia},00</span>
+        </label>
+        <input type="number" class="quantidade" min="1" value="1" disabled>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  document.querySelectorAll('.sabor input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', () => {
+      const box = input.closest('.sabor');
+      const algumMarcado = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+      box.classList.toggle('selected', algumMarcado);
+
+      const quantidadeInput = input.parentElement.parentElement.querySelector('.quantidade');
+      quantidadeInput.disabled = !input.checked;
     });
+  });
+}
 
-    function abrirModal() {
-      document.getElementById("modal").style.display = "block";
-      gerarSabores();
-    }
+function enviarPedido() {
+  const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
+  if (selecionados.length === 0) {
+    alert("Selecione pelo menos uma cocada!");
+    return;
+  }
 
-    function fecharModal(event) {
-      if (event.target.id === "modal" || event.target.className === "close") {
-        document.getElementById("modal").style.display = "none";
-      }
-    }
+  let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
+  mensagem += `👤 *Nome:* ${nomeCliente}\n`;
+  mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
+  mensagem += `*Itens do Pedido:*\n`;
 
-    function gerarSabores() {
-      const container = document.getElementById("sabores");
-      container.innerHTML = "";
+  let total = 0;
 
-      sabores.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "sabor";
-        div.innerHTML = `
-          <strong>${item.nome}</strong><br><br>
-          <label>
-            <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
-            Potinho - R$${item.potinho},00
-            <input type="number" class="quantidade" min="1" value="1" disabled>
-          </label>
-          <label>
-            <input type="checkbox" data-nome="${item.nome}" data-tipo="Pote Família" data-preco="${item.familia}">
-            Família - R$${item.familia},00
-            <input type="number" class="quantidade" min="1" value="1" disabled>
-          </label>
-        `;
-        container.appendChild(div);
-      });
+  selecionados.forEach(item => {
+    const nome = item.dataset.nome;
+    const tipo = item.dataset.tipo;
+    const preco = parseFloat(item.dataset.preco);
+    const quantidade = parseInt(item.parentElement.parentElement.querySelector('.quantidade').value) || 1;
+    const subtotal = preco * quantidade;
 
-      document.querySelectorAll('.sabor input[type="checkbox"]').forEach(input => {
-        input.addEventListener('change', () => {
-          const box = input.closest('.sabor');
-          const algumMarcado = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
-          box.classList.toggle('selected', algumMarcado);
+    mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
+    total += subtotal;
+  });
 
-          const quantidadeInput = input.parentElement.querySelector('.quantidade');
-          quantidadeInput.disabled = !input.checked;
-        });
-      });
-    }
+  mensagem += `\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
+  mensagem += `\n\nAguardo confirmação! 😊`;
 
-    function enviarPedido() {
-      const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
-      if (selecionados.length === 0) {
-        alert("Selecione pelo menos uma cocada!");
-        return;
-      }
+  const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
+  window.open(url, '_blank');
+}
+</script>
 
-      let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
-      mensagem += `👤 *Nome:* ${nomeCliente}\n`;
-      mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
-      mensagem += `*Itens do Pedido:*\n`;
-
-      let total = 0;
-
-      selecionados.forEach(item => {
-        const nome = item.dataset.nome;
-        const tipo = item.dataset.tipo;
-        const preco = parseFloat(item.dataset.preco);
-        const quantidade = parseInt(item.parentElement.querySelector('.quantidade').value) || 1;
-        const subtotal = preco * quantidade;
-
-        mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
-        total += subtotal;
-      });
-
-      mensagem += `\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
-      mensagem += `\n\nAguardo confirmação! 😊`;
-
-      const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
-      window.open(url, '_blank');
-    }
-  </script>
 </body>
 </html>
