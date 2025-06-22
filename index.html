@@ -17,7 +17,7 @@
     header {
       background-color: #fce8f3cc;
       text-align: center;
-      padding: 40px 20px;
+      padding: 20px 20px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
@@ -26,46 +26,52 @@
       height: auto;
     }
 
-    .botoes {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      padding: 20px;
-      margin: 20px 0;
-    }
+	.botoes {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  gap: 15px;
+	  padding: 20px;
+	  margin: 20px 0;
+	}
 
-    .botoes a, .botoes button,
-    .modal-box button,
-    form button {
-      text-decoration: none;
-      background-color: #ff9ecf;
-      color: #fff;
-      padding: 12px;
-      border-radius: 30px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: background 0.3s;
-      border: none;
-      cursor: pointer;
-      width: 280px;
-      max-width: 90%;
-      text-align: center;
-    }
+	.botoes a,
+	.botoes button,
+	.modal-box button,
+	form button {
+	  display: inline-block;
+	  box-sizing: border-box;
+	  text-decoration: none;
+	  background-color: #ff9ecf;
+	  color: #fff;
+	  padding: 12px;
+	  margin: 0;
+	  border-radius: 30px;
+	  font-weight: bold;
+	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	  transition: background 0.3s;
+	  border: none;
+	  cursor: pointer;
+	  width: 280px;
+	  max-width: 90%;
+	  text-align: center;
+	  font-family: inherit;
+	  font-size: inherit;
+	  line-height: normal;
+	}
 
-    .botoes a:hover, .botoes button:hover,
-    .modal-box button:hover,
-    form button:hover {
-      background-color: #e76cb3;
-    }
+	.botoes a:hover,
+	.botoes button:hover,
+	.modal-box button:hover,
+	form button:hover {
+	  background-color: #e76cb3;
+	}
 
     main {
-      padding-top: 1px;
-      padding-bottom: 30px;
-      padding-left: 20px;
-      padding-right: 20px;
+	  text-align: center;
+      padding: 20px;
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 1px auto;
       background-color: #ffffffcc;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -82,7 +88,7 @@
       width: 300px;
       height: 200px;
       object-fit: cover;
-      border-radius: 15px;
+      border-radius: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
@@ -92,7 +98,7 @@
       padding: 20px;
       color: #653c2c;
       font-size: 14px;
-      margin-top: 40px;
+      margin-top: 1px;
     }
 
     .modal {
@@ -217,7 +223,7 @@
   </section>
 
   <main>
-    <h1>Bem-vindo à Vai de Doce!</h1>
+    <h2>Bem-vindo à Vai de Doce!</h2>
     <p>Uma explosão de sabor em cada mordida! Aqui você encontra nossas cocadas artesanais feitas com muito amor e carinho.</p>
 
     <section class="galeria">
