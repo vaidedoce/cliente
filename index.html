@@ -3,176 +3,370 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vai de Doce - Cartão de Visita</title>
+  <title>Vai de Doce</title>
   <style>
-    .fundo-fixo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: 
-        linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
-        url('fundo.JPG') no-repeat center center;
-      background-size: cover;
-      z-index: -1;
-    }
-
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      background-image: url('fundo.JPG');
+      background-repeat: repeat;
+      background-size: auto;
+      background-attachment: fixed;
+    }
+
+    header {
+      background-color: #fce8f3cc;
       text-align: center;
-      padding: 30px 15px;
-      color: white;
-      position: relative;
-      z-index: 1;
+      padding: 40px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    img.logo {
-      max-width: 240px;
-      filter: drop-shadow(0px 0px 8px #523724);
+    header img {
+      max-width: 300px;
+      height: auto;
     }
 
-    h1, h3 {
-      color: #523724;
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
     }
 
-    h1 {
-      font-size: 1.8em;
-    }
-
-    h3 {
-      font-size: 1.4em;
-    }
-
-    .btn {
-      display: block;
-      margin: 15px auto;
-      padding: 16px 28px;
-      border: 2px solid #523724;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: #fff5eb;
-      color: #523724;
+    .botoes a, .botoes button {
       text-decoration: none;
-      width: 85%;
-      max-width: 340px;
-      transition: all 0.3s ease;
+      background-color: #ff9ecf;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
     }
 
-    .btn:hover {
-      background-color: #fff5eb;
-      color: #000;
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 4px 15px rgba(25, 39, 23, 0.6);
+    .botoes a:hover, .botoes button:hover,
+    .modal-box button:hover {
+      background-color: #e76cb3;
     }
 
-    .qr-container {
-      margin-top: 1px;
+    main {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 40px auto;
+      background-color: #ffffffcc;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    #pixNumero {
-      display: none;
+    section {
+      margin-bottom: 40px;
     }
 
-    #msgPix {
-      font-size: 1rem;
-	  font-weight: bold;
-      color: #523724;
+    h1, h2 {
+      color: #653c2c;
+    }
+
+    p {
+      color: #444;
+      line-height: 1.6;
     }
 
     .galeria {
-      margin-top: 25px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
 
     .galeria img {
-      width: 90%;
-      max-width: 360px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(25, 39, 23, 0.3);
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .galeria img:hover {
-      transform: scale(1.03);
+    footer {
+      text-align: center;
+      background-color: #fce8f3cc;
+      padding: 20px;
+      color: #653c2c;
+      font-size: 14px;
+      margin-top: 40px;
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      justify-content: center;
-      align-items: center;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      overflow-y: auto;
     }
 
-    .modal img {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 12px;
+    .modal-box {
+      background: #fff9f5;
+      margin: 50px auto;
+      padding: 30px;
+      max-width: 600px;
+      border-radius: 20px;
+      color: #653c2c;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
 
-    .modal:target {
+    .modal-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal .close {
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .sabores {
       display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
 
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 32px;
+    .sabor {
+      border: 2px solid #ffd2e3;
+      border-radius: 15px;
+      padding: 15px;
+      width: 260px;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sabor.selected {
+      border-color: #ff66aa;
+      background-color: #fff0f6;
+    }
+
+    .sabor label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .modal-box button {
+      background-color: #ff9ecf;
       color: white;
-      text-decoration: none;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: background-color 0.3s;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    input[type="number"] {
+      width: 60px;
+    }
+
+    @media (max-width: 600px) {
+      header img {
+        max-width: 200px;
+      }
+
+      .botoes {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .galeria img {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="Logo Vai de Doce">
+    <div class="botoes">
+      <a href="https://wa.me/5524999999999" target="_blank">WhatsApp</a>
+      <a href="https://www.instagram.com/2h.fitness/" target="_blank">Instagram</a>
+      <button onclick="abrirFormulario()">Ver Cardápio</button>
+    </div>
+  </header>
 
-  <div class="fundo-fixo"></div>
+  <main>
+    <section>
+      <h1>Bem-vindo à Vai de Doce!</h1>
+      <p>Uma explosão de sabor em cada mordida! Aqui você encontra nossas cocadas artesanais feitas com muito amor e carinho.</p>
+    </section>
 
-  <img src="logo.png" alt="Logo Vai de Doce" class="logo" />
+    <section class="galeria">
+      <img src="foto1.jpg" alt="Imagem da doceria ou produto 1">
+      <img src="foto2.jpg" alt="Imagem da doceria ou produto 2">
+      <img src="foto3.jpg" alt="Imagem da doceria ou produto 3">
+    </section>
+  </main>
 
-  <h3><b>VENDENDO AMOR <br>EM FORMA DE DOCES!</b></h3>
+  <footer>
+    &copy; 2025 Vai de Doce. Todos os direitos reservados.
+  </footer>
 
-  <a href="https://www.instagram.com/vaidedoce_b?igsh=MWpxb3ZwMTRyeDFoOA==" class="btn" target="_blank">Instagram</a>
-  <a href="https://wa.me/5524999161333?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20as%20cocadas." class="btn" target="_blank">WhatsApp</a>
-  <a href="#" class="btn" onclick="copiarPix()">Copiar chave PIX</a>
-
-  <div class="qr-container">
-    <p id="msgPix"></p>
-    <span id="pixNumero">24999161333</span>
+  <!-- Modal Formulário -->
+  <div id="formModal" class="modal" onclick="fecharFormulario(event)">
+    <div class="modal-box">
+      <span class="close" onclick="fecharFormulario(event)">&times;</span>
+      <h2>Preencha seus dados</h2>
+      <form id="dadosForm">
+        <input type="text" id="nome" name="nome" placeholder="Nome completo" required style="width:100%; margin-bottom:10px;">
+        <input type="text" id="endereco" name="endereco" placeholder="Endereço" required style="width:100%; margin-bottom:15px;">
+        <button type="submit">Acessar Cardápio</button>
+      </form>
+    </div>
   </div>
 
-  <!-- Cardápio visual -->
-  <h3><b>Cardápio</b></h3>
-  <div class="galeria">
-    <a href="#cardapio"><img src="cardapio_otimizado.jpg" alt="Cardápio Vai de Doce" /></a>
-  </div>
-
-  <!-- Modal -->
-  <div id="cardapio" class="modal">
-    <a href="#" class="close">&times;</a>
-    <img src="cardapio_otimizado.jpg" alt="Cardápio Completo" />
+  <!-- Modal Cardápio -->
+  <div id="modal" class="modal" onclick="fecharModal(event)">
+    <div class="modal-box">
+      <span class="close" onclick="fecharModal(event)">&times;</span>
+      <h2>Monte seu pedido de Cocadas</h2>
+      <div class="sabores" id="sabores"></div>
+      <button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
+    </div>
   </div>
 
   <script>
-    function copiarPix() {
-      const numeroPix = document.getElementById("pixNumero").innerText;
-      navigator.clipboard.writeText(numeroPix).then(() => {
-        document.getElementById("msgPix").innerHTML = "Chave Pix copiada com sucesso!<br>Nome: Bárbara Machado Valim de Almeida<br>Banco: Caixa";
-      }).catch(err => {
-        document.getElementById("msgPix").innerHTML = "Erro ao copiar Pix";
+    const sabores = [
+      { nome: "Tradicional", potinho: 6, familia: 35 },
+      { nome: "Maracujá", potinho: 7, familia: 40 },
+      { nome: "Gengibre", potinho: 7, familia: 40 },
+      { nome: "Limão", potinho: 7, familia: 40 },
+      { nome: "Café", potinho: 7, familia: 40 },
+      { nome: "Abacaxi", potinho: 7, familia: 40 },
+      { nome: "Nozes", potinho: 8, familia: 56 },
+      { nome: "Macadâmia", potinho: 9, familia: 63 }
+    ];
+
+    let nomeCliente = '';
+    let enderecoCliente = '';
+
+    function abrirFormulario() {
+      document.getElementById("formModal").style.display = "block";
+    }
+
+    function fecharFormulario(event) {
+      if (event.target.id === "formModal" || event.target.className === "close") {
+        document.getElementById("formModal").style.display = "none";
+      }
+    }
+
+    document.getElementById('dadosForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      nomeCliente = document.getElementById('nome').value.trim();
+      enderecoCliente = document.getElementById('endereco').value.trim();
+
+      if (nomeCliente === "" || enderecoCliente === "") {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      document.getElementById("formModal").style.display = "none";
+      abrirModal();
+    });
+
+    function abrirModal() {
+      document.getElementById("modal").style.display = "block";
+      gerarSabores();
+    }
+
+    function fecharModal(event) {
+      if (event.target.id === "modal" || event.target.className === "close") {
+        document.getElementById("modal").style.display = "none";
+      }
+    }
+
+    function gerarSabores() {
+      const container = document.getElementById("sabores");
+      container.innerHTML = "";
+
+      sabores.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "sabor";
+        div.innerHTML = `
+          <strong>${item.nome}</strong><br><br>
+          <label>
+            <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
+            Potinho - R$${item.potinho},00
+            <input type="number" class="quantidade" min="1" value="1" disabled>
+          </label>
+          <label>
+            <input type="checkbox" data-nome="${item.nome}" data-tipo="Pote Família" data-preco="${item.familia}">
+            Família - R$${item.familia},00
+            <input type="number" class="quantidade" min="1" value="1" disabled>
+          </label>
+        `;
+        container.appendChild(div);
+      });
+
+      document.querySelectorAll('.sabor input[type="checkbox"]').forEach(input => {
+        input.addEventListener('change', () => {
+          const box = input.closest('.sabor');
+          const algumMarcado = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+          box.classList.toggle('selected', algumMarcado);
+
+          const quantidadeInput = input.parentElement.querySelector('.quantidade');
+          quantidadeInput.disabled = !input.checked;
+        });
       });
     }
-  </script>
 
+    function enviarPedido() {
+      const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
+      if (selecionados.length === 0) {
+        alert("Selecione pelo menos uma cocada!");
+        return;
+      }
+
+      let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
+      mensagem += `👤 *Nome:* ${nomeCliente}\n`;
+      mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
+      mensagem += `*Itens do Pedido:*\n`;
+
+      let total = 0;
+
+      selecionados.forEach(item => {
+        const nome = item.dataset.nome;
+        const tipo = item.dataset.tipo;
+        const preco = parseFloat(item.dataset.preco);
+        const quantidade = parseInt(item.parentElement.querySelector('.quantidade').value) || 1;
+        const subtotal = preco * quantidade;
+
+        mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
+        total += subtotal;
+      });
+
+      mensagem += `\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
+      mensagem += `\n\nAguardo confirmação! 😊`;
+
+      const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
