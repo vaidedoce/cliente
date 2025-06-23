@@ -410,7 +410,7 @@ function enviarPedido() {
     return;
   }
 
-  let totalPotinhos = 0;
+  const potesPorSabor = {};
   let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
   mensagem += `👤 *Nome:* ${nomeCliente}\n`;
   mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
@@ -425,15 +425,20 @@ function enviarPedido() {
     const quantidade = parseInt(item.parentElement.parentElement.querySelector('.quantidade').value) || 1;
     const subtotal = preco * quantidade;
 
-    if (tipo === 'Potinho') totalPotinhos += quantidade;
+    if (tipo === 'Potinho') {
+      if (!potesPorSabor[nome]) potesPorSabor[nome] = 0;
+      potesPorSabor[nome] += quantidade;
+    }
 
     mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
     total += subtotal;
   });
 
-  if (totalPotinhos < 5) {
-    alert("O pedido mínimo é de 5 potinhos.");
-    return;
+  for (const sabor in potesPorSabor) {
+    if (potesPorSabor[sabor] < 5) {
+      alert(`O pedido mínimo para o sabor *${sabor}* é de 5 potinhos.`);
+      return;
+    }
   }
 
   if (freteAtual > 0) {
@@ -456,7 +461,7 @@ function enviarPedido() {
   }, 1200);
 }
 
-// Efeito sonoro nos cliques
+// Efeito sonoro nos botões
 const clickSound = document.getElementById("clickSound");
 document.querySelectorAll('button, .botoes a').forEach(el => {
   el.addEventListener('click', () => {
