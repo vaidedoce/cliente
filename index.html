@@ -17,7 +17,7 @@
     header {
       background-color: #fce8f3cc;
       text-align: center;
-      padding: 20px 20px;
+      padding: 20px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
@@ -26,52 +26,58 @@
       height: auto;
     }
 
-	.botoes {
-	  display: flex;
-	  flex-direction: column;
-	  align-items: center;
-	  gap: 15px;
-	  padding: 20px;
-	  margin: 20px 0;
-	}
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding: 20px;
+      margin: 20px 0;
+    }
 
-	.botoes a,
-	.botoes button,
-	.modal-box button,
-	form button {
-	  display: inline-block;
-	  box-sizing: border-box;
-	  text-decoration: none;
-	  background-color: #ff9ecf;
-	  color: #fff;
-	  padding: 12px;
-	  margin: 0;
-	  border-radius: 30px;
-	  font-weight: bold;
-	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	  transition: background 0.3s;
-	  border: none;
-	  cursor: pointer;
-	  width: 280px;
-	  max-width: 90%;
-	  text-align: center;
-	  font-family: inherit;
-	  font-size: inherit;
-	  line-height: normal;
-	}
+    .botoes a,
+    .botoes button,
+    .modal-box button,
+    form button {
+      display: inline-block;
+      box-sizing: border-box;
+      text-decoration: none;
+      background-color: #ff9ecf;
+      color: #fff;
+      padding: 12px;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s, transform 0.1s;
+      border: none;
+      cursor: pointer;
+      width: 280px;
+      max-width: 90%;
+      text-align: center;
+      font-family: inherit;
+      font-size: inherit;
+    }
 
-	.botoes a:hover,
-	.botoes button:hover,
-	.modal-box button:hover,
-	form button:hover {
-	  background-color: #e76cb3;
-	}
+    .botoes a:hover,
+    .botoes button:hover,
+    .modal-box button:hover,
+    form button:hover {
+      background-color: #e76cb3;
+    }
+
+    .botoes a:active,
+    .botoes button:active,
+    .modal-box button:active,
+    form button:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
 
     main {
-	  text-align: center;
+      text-align: center;
       padding: 20px;
       max-width: 1000px;
-      margin: 1px auto;
+      margin: auto;
       background-color: #ffffffcc;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -98,7 +104,6 @@
       padding: 20px;
       color: #653c2c;
       font-size: 14px;
-      margin-top: 1px;
     }
 
     .modal {
@@ -121,11 +126,6 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
 
-    .modal-box h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
     .modal .close {
       float: right;
       font-size: 28px;
@@ -141,6 +141,12 @@
       border: 1px solid #ccc;
       font-size: 16px;
       box-sizing: border-box;
+    }
+
+    #freteInfo {
+      font-weight: bold;
+      color: #653c2c;
+      margin-bottom: 10px;
     }
 
     .sabores {
@@ -180,17 +186,6 @@
       gap: 8px;
     }
 
-    .opcao label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-
-    .opcao span {
-      flex: 1;
-    }
-
     input[type="number"] {
       width: 60px;
       padding: 6px;
@@ -213,69 +208,71 @@
 </head>
 <body>
 
-  <header>
-    <img src="imagens/logo.png" alt="Logo Vai de Doce">
-  </header>
+<header>
+  <img src="imagens/logo.png" alt="Logo Vai de Doce">
+</header>
 
-  <section class="botoes">
-    <a href="https://www.instagram.com/vaidedoce_b" target="_blank">Instagram</a>
-    <button onclick="abrirFormulario()">Faça seu Pedido</button>
+<section class="botoes">
+  <a href="https://www.instagram.com/vaidedoce_b" target="_blank">Instagram</a>
+  <button onclick="abrirFormulario()">Faça seu Pedido</button>
+</section>
+
+<main>
+  <h2>Bem-vindo à Vai de Doce!</h2>
+  <p>Uma explosão de sabor em cada mordida! Cocadas artesanais feitas com carinho.</p>
+
+  <section class="galeria">
+    <img src="imagens/foto1.jpg" alt="Produto 1">
+    <img src="imagens/foto2.jpg" alt="Produto 2">
+    <img src="imagens/foto3.jpg" alt="Produto 3">
   </section>
+</main>
 
-  <main>
-    <h2>Bem-vindo à Vai de Doce!</h2>
-    <p>Uma explosão de sabor em cada mordida! Aqui você encontra nossas cocadas artesanais feitas com muito amor e carinho.</p>
+<section class="botoes">
+  <a href="https://wa.me/5524999161333" target="_blank">Fale Conosco</a>
+</section>
 
-    <section class="galeria">
-      <img src="imagens/foto1.jpg" alt="Produto 1">
-      <img src="imagens/foto2.jpg" alt="Produto 2">
-      <img src="imagens/foto3.jpg" alt="Produto 3">
-    </section>
-  </main>
+<footer>
+  &copy; 2025 Vai de Doce. Todos os direitos reservados.
+</footer>
 
-  <section class="botoes">
-    <a href="https://wa.me/5524999161333" target="_blank">Fale Conosco</a>
-  </section>
-
-  <footer>
-    &copy; 2025 Vai de Doce. Todos os direitos reservados.
-  </footer>
-
-  <!-- Modal Formulário -->
-  <div id="formModal" class="modal" onclick="fecharFormulario(event)">
-    <div class="modal-box">
-      <span class="close" onclick="fecharFormulario(event)">&times;</span>
-      <h2>Preencha seus dados</h2>
-      <form id="dadosForm">
-        <select id="cidade" required>
-          <option value="">Selecione a Cidade</option>
-          <option value="Arrozal">Arrozal</option>
-          <option value="Pinheiral">Pinheiral</option>
-          <option value="Piraí">Piraí</option>
-          <option value="Volta Redonda">Volta Redonda</option>
-        </select>
-
-        <div id="campoBairro">
-          <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
-        </div>
-
-        <input type="text" id="rua" name="rua" placeholder="Rua" required>
-        <input type="text" id="numero" name="numero" placeholder="Número" required>
-        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-        <button type="submit">Acessar Cardápio</button>
-      </form>
-    </div>
+<!-- Modal Formulário -->
+<div id="formModal" class="modal" onclick="fecharFormulario(event)">
+  <div class="modal-box">
+    <span class="close" onclick="fecharFormulario(event)">&times;</span>
+    <h2>Preencha seus dados</h2>
+    <form id="dadosForm">
+      <select id="cidade" required>
+        <option value="">Selecione a Cidade</option>
+        <option value="Arrozal">Arrozal</option>
+        <option value="Pinheiral">Pinheiral</option>
+        <option value="Piraí">Piraí</option>
+        <option value="Volta Redonda">Volta Redonda</option>
+      </select>
+      <div id="freteInfo"></div>
+      <div id="campoBairro">
+        <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+      </div>
+      <input type="text" id="rua" name="rua" placeholder="Rua" required>
+      <input type="text" id="numero" name="numero" placeholder="Número" required>
+      <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+      <button type="submit">Acessar Cardápio</button>
+    </form>
   </div>
+</div>
 
-  <!-- Modal Cardápio -->
-  <div id="modal" class="modal" onclick="fecharModal(event)">
-    <div class="modal-box">
-      <span class="close" onclick="fecharModal(event)">&times;</span>
-      <h2>Monte seu pedido de Cocadas</h2>
-      <div class="sabores" id="sabores"></div>
-      <button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
-    </div>
+<!-- Modal Cardápio -->
+<div id="modal" class="modal" onclick="fecharModal(event)">
+  <div class="modal-box">
+    <span class="close" onclick="fecharModal(event)">&times;</span>
+    <h2>Monte seu pedido de Cocadas</h2>
+    <div class="sabores" id="sabores"></div>
+    <button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
   </div>
+</div>
+
+<!-- Efeito sonoro -->
+<audio id="clickSound" src="imagens/click.mp3" preload="auto"></audio>
 
 <script>
 const sabores = [
@@ -291,12 +288,16 @@ const sabores = [
 
 let nomeCliente = '';
 let enderecoCliente = '';
+let freteAtual = 0;
 
 const cidadeSelect = document.getElementById('cidade');
 const campoBairro = document.getElementById('campoBairro');
 
 cidadeSelect.addEventListener('change', function () {
-  if (this.value === 'Volta Redonda') {
+  const cidade = this.value;
+  const freteInfo = document.getElementById("freteInfo");
+
+  if (cidade === 'Volta Redonda') {
     campoBairro.innerHTML = `
       <select id="bairro" name="bairro" required>
         <option value="">Selecione o Bairro</option>
@@ -308,6 +309,17 @@ cidadeSelect.addEventListener('change', function () {
     campoBairro.innerHTML = `
       <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
     `;
+  }
+
+  if (cidade === 'Arrozal') {
+    freteAtual = 2;
+    freteInfo.textContent = "Frete: R$2,00";
+  } else if (['Volta Redonda', 'Piraí', 'Pinheiral'].includes(cidade)) {
+    freteAtual = 10;
+    freteInfo.textContent = "Frete: R$10,00";
+  } else {
+    freteAtual = 0;
+    freteInfo.textContent = "";
   }
 });
 
@@ -398,6 +410,7 @@ function enviarPedido() {
     return;
   }
 
+  let totalPotinhos = 0;
   let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
   mensagem += `👤 *Nome:* ${nomeCliente}\n`;
   mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
@@ -412,16 +425,47 @@ function enviarPedido() {
     const quantidade = parseInt(item.parentElement.parentElement.querySelector('.quantidade').value) || 1;
     const subtotal = preco * quantidade;
 
+    if (tipo === 'Potinho') totalPotinhos += quantidade;
+
     mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
     total += subtotal;
   });
 
-  mensagem += `\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
+  if (totalPotinhos < 5) {
+    alert("O pedido mínimo é de 5 potinhos.");
+    return;
+  }
+
+  if (freteAtual > 0) {
+    mensagem += `\n🚚 *Frete:* R$${freteAtual.toFixed(2).replace('.', ',')}`;
+    total += freteAtual;
+  }
+
+  mensagem += `\n\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
   mensagem += `\n\nAguardo confirmação! 😊`;
 
-  const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
-  window.open(url, '_blank');
+  const botao = document.querySelector('#modal button');
+  botao.disabled = true;
+  botao.innerHTML = "Enviando... ⏳";
+
+  setTimeout(() => {
+    const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
+    botao.disabled = false;
+    botao.innerHTML = "Enviar Pedido no WhatsApp";
+  }, 1200);
 }
+
+// Efeito sonoro nos cliques
+const clickSound = document.getElementById("clickSound");
+document.querySelectorAll('button, .botoes a').forEach(el => {
+  el.addEventListener('click', () => {
+    if (clickSound) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+  });
+});
 </script>
 
 </body>
