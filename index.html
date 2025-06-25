@@ -106,6 +106,30 @@
       font-size: 14px;
     }
 
+	.opcao-linha {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  gap: 10px;
+	  margin-top: 5px;
+	}
+
+	.opcao-linha label {
+	  flex: 1;
+	  font-size: 14px;
+	  display: flex;
+	  align-items: center;
+	  gap: 8px;
+	}
+
+	.opcao-linha input[type="number"] {
+	  width: 60px;
+	  padding: 6px;
+	  border-radius: 6px;
+	  border: 1px solid #ccc;
+	  text-align: center;
+	}
+
     .modal {
       display: none;
       position: fixed;
@@ -148,6 +172,16 @@
       color: #653c2c;
       margin-bottom: 10px;
     }
+
+	.input-padrao {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+	}
 
     .sabores {
       display: flex;
@@ -256,7 +290,13 @@
       <input type="text" id="rua" name="rua" placeholder="Rua" required>
       <input type="text" id="numero" name="numero" placeholder="Número" required>
       <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-      <button type="submit">Acessar Cardápio</button>
+	  <!-- CAMPO DE DATA COM DATA MÍNIMA -->
+	  <h3>Data prevista para entrega:</h3>
+	  <p>Retornaremos a possibilidade da data via whatsapp.</p>
+	  <input type="date" id="dataEntrega" name="dataEntrega" placeholder="Data de Entrega" class="input-padrao" />
+	  
+	      
+	  <button type="submit">Acessar Cardápio</button>
     </form>
   </div>
 </div>
@@ -266,6 +306,8 @@
   <div class="modal-box">
     <span class="close" onclick="fecharModal(event)">&times;</span>
     <h2>Monte seu pedido de Cocadas</h2>
+	<h3>Potão M - 50 unidades</h3>
+	<h3>Potão G - 100 unidades</h3>
     <div class="sabores" id="sabores"></div>
     <button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
   </div>
@@ -275,15 +317,24 @@
 <audio id="clickSound" src="imagens/click.mp3" preload="auto"></audio>
 
 <script>
+// Define a data mínima como amanhã
+const inputData = document.getElementById("dataEntrega");
+  const hoje = new Date();
+  hoje.setDate(hoje.getDate() + 1); // adiciona 1 dia
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoje.getDate()).padStart(2, '0');
+  inputData.min = `${ano}-${mes}-${dia}`;
+
 const sabores = [
-  { nome: "Tradicional", potinho: 6, familia: 35 },
-  { nome: "Maracujá", potinho: 7, familia: 40 },
-  { nome: "Gengibre", potinho: 7, familia: 40 },
-  { nome: "Limão", potinho: 7, familia: 40 },
-  { nome: "Café", potinho: 7, familia: 40 },
-  { nome: "Abacaxi", potinho: 7, familia: 40 },
-  { nome: "Nozes", potinho: 8, familia: 56 },
-  { nome: "Macadâmia", potinho: 9, familia: 63 }
+  { nome: "Tradicional", potinho: 7, "potão M": 40, "potão G": 80 },
+  { nome: "Maracujá", potinho: 8, "potão M": 45, "potão G": 85 },
+  { nome: "Gengibre", potinho: 8, "potão M": 45, "potão G": 85 },
+  { nome: "Limão", potinho: 8, "potão M": 45, "potão G": 85 },
+  { nome: "Café", potinho: 8, "potão M": 45, "potão G": 85 },
+  { nome: "Abacaxi", potinho: 8, "potão M": 45, "potão G": 85 },
+  { nome: "Nozes", potinho: 9, "potão M": 60, "potão G": 115 },
+  { nome: "Macadâmia", potinho: 10, "potão M": 70, "potão G": 135 }
 ];
 
 let nomeCliente = '';
@@ -372,22 +423,29 @@ function gerarSabores() {
     const div = document.createElement("div");
     div.className = "sabor";
     div.innerHTML = `
-      <strong>${item.nome}</strong>
-      <div class="opcao">
-        <label>
-          <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
-          <span>Potinho - R$${item.potinho},00</span>
-        </label>
-        <input type="number" class="quantidade" min="1" value="1" disabled>
-      </div>
-      <div class="opcao">
-        <label>
-          <input type="checkbox" data-nome="${item.nome}" data-tipo="Pote Família" data-preco="${item.familia}">
-          <span>Família - R$${item.familia},00</span>
-        </label>
-        <input type="number" class="quantidade" min="1" value="1" disabled>
-      </div>
-    `;
+	  <strong>${item.nome}</strong>
+	  <div class="opcao-linha">
+		<label>
+		  <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
+		  Potinho - R$${item.potinho},00
+		</label>
+		<input type="number" class="quantidade" min="1" value="1" disabled>
+	  </div>
+	  <div class="opcao-linha">
+		<label>
+		  <input type="checkbox" data-nome="${item.nome}" data-tipo="potão M" data-preco="${item["potão M"]}">
+		  Potão M - R$${item["potão M"]},00
+		</label>
+		<input type="number" class="quantidade" min="1" value="1" disabled>
+	  </div>
+	  <div class="opcao-linha">
+		<label>
+		  <input type="checkbox" data-nome="${item.nome}" data-tipo="potão G" data-preco="${item["potão G"]}">
+		  Potão G - R$${item["potão G"]},00
+		</label>
+		<input type="number" class="quantidade" min="1" value="1" disabled>
+	  </div>
+	`;
     container.appendChild(div);
   });
 
@@ -411,9 +469,14 @@ function enviarPedido() {
   }
 
   const potesPorSabor = {};
+  const nomeCliente = document.querySelector('#nome').value;
+  const enderecoCliente = `${document.querySelector('#rua').value}, ${document.querySelector('#numero').value}, ${document.querySelector('#bairro').value}, ${document.querySelector('#cidade').value}`;
+  const dataEntrega = document.querySelector('#dataEntrega').value;
+
   let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
   mensagem += `👤 *Nome:* ${nomeCliente}\n`;
-  mensagem += `🏠 *Endereço:* ${enderecoCliente}\n\n`;
+  mensagem += `🏠 *Endereço:* ${enderecoCliente}\n`;
+  mensagem += `📅 *Data de Entrega:* ${dataEntrega.split('-').reverse().join('/')}\n\n`; // formata para dd/mm/aaaa
   mensagem += `*Itens do Pedido:*\n`;
 
   let total = 0;
@@ -430,7 +493,7 @@ function enviarPedido() {
       potesPorSabor[nome] += quantidade;
     }
 
-    mensagem += `• ${nome} (${tipo}) x${quantidade} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
+    mensagem += `• ${quantidade} (${tipo}) x ${nome} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
     total += subtotal;
   });
 
