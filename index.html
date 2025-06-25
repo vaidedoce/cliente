@@ -212,6 +212,20 @@
       font-size: 18px;
     }
 
+    .mapa-container {
+      margin: 0 auto;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .mapa-container iframe {
+      border: 0;
+      border-radius: 12px;
+      width: 100%;
+      height: 300px;
+    }
+
     .opcao {
       display: flex;
       align-items: center;
@@ -249,6 +263,13 @@
 <section class="botoes">
   <a href="https://www.instagram.com/vaidedoce_b" target="_blank">Instagram</a>
   <button onclick="abrirFormulario()">Faça seu Pedido</button>
+  <button onclick="mostrarMapa()">Nossa Localização</button>
+<div class="mapa-container" id="mapaWrapper" style="display: none;">
+  <iframe id="mapaContainer"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.5567981879935!2d-44.03916538737111!3d-22.595673826744054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9ea15f802bc5bf%3A0xae40a628f34b4bbd!2sR.%20E%2C%2018%20-%20Arrozal%2C%20Pira%C3%AD%20-%20RJ%2C%2027175-000!5e0!3m2!1spt-BR!2sbr!4v1750876205467!5m2!1spt-BR!2sbr" 
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
 </section>
 
 <main>
@@ -384,6 +405,11 @@ function fecharFormulario(event) {
   }
 }
 
+function mostrarMapa() {
+  const mapaWrapper = document.getElementById('mapaWrapper');
+  mapaWrapper.style.display = mapaWrapper.style.display === 'block' ? 'none' : 'block';
+}
+
 document.getElementById('dadosForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const nome = document.getElementById('nome').value.trim();
@@ -493,7 +519,7 @@ function enviarPedido() {
       potesPorSabor[nome] += quantidade;
     }
 
-    mensagem += `• ${quantidade} (${tipo}) x ${nome} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
+    mensagem += `• ${quantidade} (${tipo}) ${nome} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
     total += subtotal;
   });
 
