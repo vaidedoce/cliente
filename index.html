@@ -262,20 +262,16 @@
 
 <section class="botoes">
   <a href="https://www.instagram.com/vaidedoce_b" target="_blank">Instagram</a>
-  <button onclick="abrirFormulario()">Faça seu Pedido</button>
+  <button onclick="abrirModal()">Faça seu Pedido</button>
   <button onclick="mostrarMapa()">Nossa Localização</button>
   <div class="mapa-container" id="mapaWrapper" style="display: none;">
-    <iframe id="mapaContainer"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.5567981879935!2d-44.03916538737111!3d-22.595673826744054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9ea15f802bc5bf%3A0xae40a628f34b4bbd!2sR.%20E%2C%2018%20-%20Arrozal%2C%20Pira%C3%AD%20-%20RJ%2C%2027175-000!5e0!3m2!1spt-BR!2sbr!4v1750876205467!5m2!1spt-BR!2sbr" 
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-</div>
+    <iframe id="mapaContainer" src="https://www.google.com/maps/embed?pb=..." allowfullscreen="" loading="lazy"></iframe>
+  </div>
 </section>
 
 <main>
   <h2>Bem-vindo à Vai de Doce!</h2>
   <p>Uma explosão de sabor em cada mordida! Cocadas artesanais feitas com carinho.</p>
-
   <section class="galeria">
     <img src="imagens/foto1.jpg" alt="Produto 1">
     <img src="imagens/foto2.jpg" alt="Produto 2">
@@ -290,6 +286,18 @@
 <footer>
   &copy; 2025 Vai de Doce. Todos os direitos reservados.
 </footer>
+
+<!-- Modal Cardápio -->
+<div id="modal" class="modal" onclick="fecharModal(event)">
+  <div class="modal-box">
+    <span class="close" onclick="fecharModal(event)">&times;</span>
+    <h2>Monte seu pedido de Cocadas</h2>
+    <h3>Potão M - 50 unidades</h3>
+    <h3>Potão G - 100 unidades</h3>
+    <div class="sabores" id="sabores"></div>
+    <button onclick="enviarPedido()">Avançar para Dados</button>
+  </div>
+</div>
 
 <!-- Modal Formulário -->
 <div id="formModal" class="modal" onclick="fecharFormulario(event)">
@@ -311,42 +319,17 @@
       <input type="text" id="rua" name="rua" placeholder="Rua" required>
       <input type="text" id="numero" name="numero" placeholder="Número" required>
       <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-	  <!-- CAMPO DE DATA COM DATA MÍNIMA -->
-	  <h3>Data prevista para entrega:</h3>
-	  <p>Retornaremos a possibilidade da data via whatsapp.</p>
-	  <input type="date" id="dataEntrega" name="dataEntrega" placeholder="Data de Entrega" class="input-padrao" />
-	  
-	      
-	  <button type="submit">Acessar Cardápio</button>
+      <h3>Data prevista para entrega:</h3>
+      <p>Retornaremos a possibilidade da data via whatsapp.</p>
+      <input type="date" id="dataEntrega" name="dataEntrega" class="input-padrao" required />
+      <button type="submit">Enviar para o WhatsApp</button>
     </form>
   </div>
 </div>
 
-<!-- Modal Cardápio -->
-<div id="modal" class="modal" onclick="fecharModal(event)">
-  <div class="modal-box">
-    <span class="close" onclick="fecharModal(event)">&times;</span>
-    <h2>Monte seu pedido de Cocadas</h2>
-	<h3>Potão M - 50 unidades</h3>
-	<h3>Potão G - 100 unidades</h3>
-    <div class="sabores" id="sabores"></div>
-    <button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
-  </div>
-</div>
-
-<!-- Efeito sonoro -->
 <audio id="clickSound" src="imagens/click.mp3" preload="auto"></audio>
 
 <script>
-// Define a data mínima como amanhã
-const inputData = document.getElementById("dataEntrega");
-  const hoje = new Date();
-  hoje.setDate(hoje.getDate() + 1); // adiciona 1 dia
-  const ano = hoje.getFullYear();
-  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-  const dia = String(hoje.getDate()).padStart(2, '0');
-  inputData.min = `${ano}-${mes}-${dia}`;
-
 const sabores = [
   { nome: "Tradicional", potinho: 7, "potão M": 40, "potão G": 80 },
   { nome: "Maracujá", potinho: 8, "potão M": 45, "potão G": 85 },
@@ -358,16 +341,153 @@ const sabores = [
   { nome: "Macadâmia", potinho: 10, "potão M": 70, "potão G": 135 }
 ];
 
-let nomeCliente = '';
-let enderecoCliente = '';
 let freteAtual = 0;
+let pedidoMensagem = "";
 
-const cidadeSelect = document.getElementById('cidade');
-const campoBairro = document.getElementById('campoBairro');
+function abrirModal() {
+  document.getElementById("modal").style.display = "block";
+  gerarSabores();
+}
 
-cidadeSelect.addEventListener('change', function () {
+function fecharModal(e) {
+  if (e.target.id === "modal" || e.target.className === "close") {
+    document.getElementById("modal").style.display = "none";
+  }
+}
+
+function abrirFormulario() {
+  document.getElementById("formModal").style.display = "block";
+}
+
+function fecharFormulario(e) {
+  if (e.target.id === "formModal" || e.target.className === "close") {
+    document.getElementById("formModal").style.display = "none";
+  }
+}
+
+function gerarSabores() {
+  const container = document.getElementById("sabores");
+  container.innerHTML = "";
+  sabores.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "sabor";
+    div.innerHTML = `
+      <strong>${item.nome}</strong>
+      <div class="opcao-linha">
+        <label>
+          <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
+          Potinho - R$${item.potinho},00
+        </label>
+        <input type="number" class="quantidade" min="1" value="1" disabled>
+      </div>
+      <div class="opcao-linha">
+        <label>
+          <input type="checkbox" data-nome="${item.nome}" data-tipo="potão M" data-preco="${item["potão M"]}">
+          Potão M - R$${item["potão M"]},00
+        </label>
+        <input type="number" class="quantidade" min="1" value="1" disabled>
+      </div>
+      <div class="opcao-linha">
+        <label>
+          <input type="checkbox" data-nome="${item.nome}" data-tipo="potão G" data-preco="${item["potão G"]}">
+          Potão G - R$${item["potão G"]},00
+        </label>
+        <input type="number" class="quantidade" min="1" value="1" disabled>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  document.querySelectorAll('.sabor input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', () => {
+      const box = input.closest('.sabor');
+      const algumMarcado = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+      box.classList.toggle('selected', algumMarcado);
+      const quantidadeInput = input.parentElement.parentElement.querySelector('.quantidade');
+      quantidadeInput.disabled = !input.checked;
+    });
+  });
+}
+
+function enviarPedido() {
+  const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
+  if (selecionados.length === 0) {
+    alert("Selecione pelo menos uma cocada!");
+    return;
+  }
+
+  const potesPorSabor = {};
+  let total = 0;
+
+  pedidoMensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
+  pedidoMensagem += `*Itens do Pedido:*\n`;
+
+  selecionados.forEach(item => {
+    const nome = item.dataset.nome;
+    const tipo = item.dataset.tipo;
+    const preco = parseFloat(item.dataset.preco);
+    const quantidade = parseInt(item.parentElement.parentElement.querySelector('.quantidade').value) || 1;
+    const subtotal = preco * quantidade;
+
+    if (tipo === 'Potinho') {
+      if (!potesPorSabor[nome]) potesPorSabor[nome] = 0;
+      potesPorSabor[nome] += quantidade;
+    }
+
+    pedidoMensagem += `• ${quantidade} (${tipo}) ${nome} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
+    total += subtotal;
+  });
+
+  for (const sabor in potesPorSabor) {
+    if (potesPorSabor[sabor] < 5) {
+      alert(`O pedido mínimo para o sabor *${sabor}* é de 5 potinhos.`);
+      return;
+    }
+  }
+
+  pedidoMensagem += `\n📝 Agora preencha seus dados abaixo 👇\n`;
+
+  document.getElementById("modal").style.display = "none";
+  abrirFormulario();
+}
+
+// Lógica do formulário
+document.getElementById('dadosForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const cidade = document.getElementById('cidade').value;
+  const bairro = document.getElementById('bairro').value.trim();
+  const rua = document.getElementById('rua').value.trim();
+  const numero = document.getElementById('numero').value.trim();
+  const dataEntrega = document.getElementById('dataEntrega').value;
+
+  if (!nome || !cidade || !bairro || !rua || !numero || !dataEntrega) {
+    alert("Por favor, preencha todos os campos.");
+    return;
+  }
+
+  const endereco = `${rua}, ${numero} - ${bairro} - ${cidade}`;
+  pedidoMensagem += `\n👤 *Nome:* ${nome}`;
+  pedidoMensagem += `\n🏠 *Endereço:* ${endereco}`;
+  pedidoMensagem += `\n📅 *Data de Entrega:* ${dataEntrega.split("-").reverse().join("/")}`;
+
+  if (freteAtual > 0) {
+    pedidoMensagem += `\n🚚 *Frete:* R$${freteAtual.toFixed(2).replace('.', ',')}`;
+    pedidoMensagem += `\n💰 *Total com frete incluso calculado na entrega*`;
+  }
+
+  pedidoMensagem += `\n\nAguardo confirmação! 😊`;
+
+  const url = `https://wa.me/5524999161333?text=${encodeURIComponent(pedidoMensagem)}`;
+  window.open(url, '_blank');
+  document.getElementById("formModal").style.display = "none";
+});
+
+// Atualização do frete ao selecionar cidade
+document.getElementById('cidade').addEventListener('change', function () {
   const cidade = this.value;
   const freteInfo = document.getElementById("freteInfo");
+  const campoBairro = document.getElementById("campoBairro");
 
   if (cidade === 'Volta Redonda') {
     campoBairro.innerHTML = `
@@ -378,9 +498,7 @@ cidadeSelect.addEventListener('change', function () {
       </select>
     `;
   } else {
-    campoBairro.innerHTML = `
-      <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
-    `;
+    campoBairro.innerHTML = `<input type="text" id="bairro" name="bairro" placeholder="Bairro" required>`;
   }
 
   if (cidade === 'Arrozal') {
@@ -395,180 +513,18 @@ cidadeSelect.addEventListener('change', function () {
   }
 });
 
-function abrirFormulario() {
-  document.getElementById("formModal").style.display = "block";
-}
+// Data mínima de entrega (a partir de amanhã)
+const inputData = document.getElementById("dataEntrega");
+const hoje = new Date();
+hoje.setDate(hoje.getDate() + 1);
+inputData.min = hoje.toISOString().split('T')[0];
 
-function fecharFormulario(event) {
-  if (event.target.id === "formModal" || event.target.className === "close") {
-    document.getElementById("formModal").style.display = "none";
-  }
-}
-
+// Mostrar/Ocultar Mapa
 function mostrarMapa() {
   const mapaWrapper = document.getElementById('mapaWrapper');
   const botao = document.querySelector('button[onclick="mostrarMapa()"]');
-
-  if (mapaWrapper.style.display === 'block') {
-    mapaWrapper.style.display = 'none';
-    botao.textContent = 'Nossa Localização';
-  } else {
-    mapaWrapper.style.display = 'block';
-    botao.textContent = 'Ocultar Localização';
-  }
-}
-
-document.getElementById('dadosForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const nome = document.getElementById('nome').value.trim();
-  const cidade = cidadeSelect.value;
-  const bairro = document.getElementById('bairro').value.trim();
-  const rua = document.getElementById('rua').value.trim();
-  const numero = document.getElementById('numero').value.trim();
-
-  if (!nome || !cidade || !bairro || !rua || !numero) {
-    alert("Por favor, preencha todos os campos.");
-    return;
-  }
-
-  nomeCliente = nome;
-  enderecoCliente = `${rua}, ${numero} - ${bairro} - ${cidade}`;
-
-  document.getElementById("formModal").style.display = "none";
-  abrirModal();
-});
-
-function abrirModal() {
-  document.getElementById("modal").style.display = "block";
-  gerarSabores();
-}
-
-function fecharModal(event) {
-  if (event.target.id === "modal" || event.target.className === "close") {
-    document.getElementById("modal").style.display = "none";
-  }
-}
-
-function gerarSabores() {
-  const container = document.getElementById("sabores");
-  container.innerHTML = "";
-
-  sabores.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "sabor";
-    div.innerHTML = `
-	  <strong>${item.nome}</strong>
-	  <div class="opcao-linha">
-		<label>
-		  <input type="checkbox" data-nome="${item.nome}" data-tipo="Potinho" data-preco="${item.potinho}">
-		  Potinho - R$${item.potinho},00
-		</label>
-		<input type="number" class="quantidade" min="1" value="1" disabled>
-	  </div>
-	  <div class="opcao-linha">
-		<label>
-		  <input type="checkbox" data-nome="${item.nome}" data-tipo="potão M" data-preco="${item["potão M"]}">
-		  Potão M - R$${item["potão M"]},00
-		</label>
-		<input type="number" class="quantidade" min="1" value="1" disabled>
-	  </div>
-	  <div class="opcao-linha">
-		<label>
-		  <input type="checkbox" data-nome="${item.nome}" data-tipo="potão G" data-preco="${item["potão G"]}">
-		  Potão G - R$${item["potão G"]},00
-		</label>
-		<input type="number" class="quantidade" min="1" value="1" disabled>
-	  </div>
-	`;
-    container.appendChild(div);
-  });
-
-  document.querySelectorAll('.sabor input[type="checkbox"]').forEach(input => {
-    input.addEventListener('change', () => {
-      const box = input.closest('.sabor');
-      const algumMarcado = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
-      box.classList.toggle('selected', algumMarcado);
-
-      const quantidadeInput = input.parentElement.parentElement.querySelector('.quantidade');
-      quantidadeInput.disabled = !input.checked;
-    });
-  });
-}
-
-  // Outros
-function toggleMapa() {
-  const mapa = document.getElementById("meuMapa");
-  const botao = document.getElementById("botaoMapa");
-  if (mapa.style.display === "block") {
-    mapa.style.display = "none";
-    botao.innerText = "Localização";
-  } else {
-    mapa.style.display = "block";
-    botao.innerText = "Ocultar Localização";
-  }
-}
-
-function enviarPedido() {
-  const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
-  if (selecionados.length === 0) {
-    alert("Selecione pelo menos uma cocada!");
-    return;
-  }
-
-  const potesPorSabor = {};
-  const nomeCliente = document.querySelector('#nome').value;
-  const enderecoCliente = `${document.querySelector('#rua').value}, ${document.querySelector('#numero').value}, ${document.querySelector('#bairro').value}, ${document.querySelector('#cidade').value}`;
-  const dataEntrega = document.querySelector('#dataEntrega').value;
-
-  let mensagem = `*Pedido de Cocadas - Vai de Doce*\n\n`;
-  mensagem += `👤 *Nome:* ${nomeCliente}\n`;
-  mensagem += `🏠 *Endereço:* ${enderecoCliente}\n`;
-  mensagem += `📅 *Data de Entrega:* ${dataEntrega.split('-').reverse().join('/')}\n\n`; // formata para dd/mm/aaaa
-  mensagem += `*Itens do Pedido:*\n`;
-
-  let total = 0;
-
-  selecionados.forEach(item => {
-    const nome = item.dataset.nome;
-    const tipo = item.dataset.tipo;
-    const preco = parseFloat(item.dataset.preco);
-    const quantidade = parseInt(item.parentElement.parentElement.querySelector('.quantidade').value) || 1;
-    const subtotal = preco * quantidade;
-
-    if (tipo === 'Potinho') {
-      if (!potesPorSabor[nome]) potesPorSabor[nome] = 0;
-      potesPorSabor[nome] += quantidade;
-    }
-
-    mensagem += `• ${quantidade} (${tipo}) ${nome} - R$${subtotal.toFixed(2).replace('.', ',')}\n`;
-    total += subtotal;
-  });
-
-  for (const sabor in potesPorSabor) {
-    if (potesPorSabor[sabor] < 5) {
-      alert(`O pedido mínimo para o sabor *${sabor}* é de 5 potinhos.`);
-      return;
-    }
-  }
-
-  if (freteAtual > 0) {
-    mensagem += `\n🚚 *Frete:* R$${freteAtual.toFixed(2).replace('.', ',')}`;
-    total += freteAtual;
-  }
-
-  mensagem += `\n\n💰 *Total:* R$${total.toFixed(2).replace('.', ',')}`;
-  mensagem += `\n\nAguardo confirmação! 😊`;
-
-  const botao = document.querySelector('#modal button');
-  botao.disabled = true;
-  botao.innerHTML = "Enviando... ⏳";
-
-  setTimeout(() => {
-    const url = `https://wa.me/5524999161333?text=${encodeURIComponent(mensagem)}`;
-    window.open(url, '_blank');
-    botao.disabled = false;
-    botao.innerHTML = "Enviar Pedido no WhatsApp";
-  }, 1200);
+  mapaWrapper.style.display = mapaWrapper.style.display === 'block' ? 'none' : 'block';
+  botao.textContent = mapaWrapper.style.display === 'block' ? 'Ocultar Localização' : 'Nossa Localização';
 }
 
 // Efeito sonoro nos botões
